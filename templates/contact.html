@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>My Table Example</title>
+    <style>
+    table {
+      border: 1px dashed black;
+      border-collapse: collapse;
+    }
+    th, td {
+      border: 1px dashed black;
+      padding: 5px;
+      text-align: left;
+    }
+    div1{
+    background-color:green;
+    }
+  </style>
+</head>
+<body>
+<div1>
+<form action="/SHOW1">
+    <input type="submit" value="CREATE A NEW CONTACT">
+</form>
+<table>
+    <tr>
+            <th>id</th>
+            <th>name</th>
+            <th>phone no</th>
+            <th>email id</th>
+            <th>relationship</th>
+    </tr>
+ {%for contact1 in contact%}
+  <tr>
+      <td>
+          {{contact1[0]}}
+      </td>
+            <td>
+          {{contact1[1]}}
+      </td>
+            <td>
+          {{contact1[2]}}
+      </td>
+            <td>
+          {{contact1[3]}}
+      </td>
+            <td>
+          {{contact1[4]}}
+      </td>
+  </tr>
+{% endfor %}
+</table>
+</div1>
+</body>
+</html>

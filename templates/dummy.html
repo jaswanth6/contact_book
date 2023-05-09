@@ -1,0 +1,80 @@
+<!-- templates/new.html -->
+
+{% extends "new.html" %}
+
+{% block content %}
+<h1>Add a New Contact</h1>
+<form method="post" enctype="multipart/form-data">
+    <div>
+        <label for="name">Name:</label>
+        <input type="text" name="name" id="name" required>
+    </div>
+    <div>
+        <label for="email">Email:</label>
+        <input type="email" name="email" id="email" required>
+    </div>
+    <div>
+        <label for="phone">Phone:</label>
+        <input type="tel" name="phone" id="phone" required>
+    </div>
+    <div>
+        <label for="photo">Photo:</label>
+        <input type="file" name="photo" id="photo" accept="image/*" required>
+        <button type="button" id="camera-btn">Take Photo with Camera</button>
+    </div>
+    <div>
+        <button type="submit">Add Contact</button>
+    </div>
+</form>
+{% endblock %}
+
+{% block scripts %}
+<script>
+// Get the camera button element
+const cameraBtn = document.getElementById("camera-btn");
+
+// Add a click event listener to the camera button
+cameraBtn.addEventListener("click", async () => {
+    // Get permission to use the camera
+    const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+
+    // Create a video element to show the camera stream
+    const video = document.createElement("video");
+    video.srcObject = stream;
+    video.play();
+
+    // Create a canvas element to capture the photo
+    const canvas = document.createElement("canvas");
+    canvas.width = video.videoWidth;
+    canvas.height = video.videoHeight;
+
+    // Wait for the video to load and then draw it on the canvas
+    video.addEventListener("loadeddata", () => {
+        canvas.getContext("2d").drawImage(video, 0, 0, canvas.width, canvas.height);
+
+        // Convert the canvas image to a data URL
+        const dataUrl = canvas.toDataURL();
+
+        // Create a blob from the data URL
+        const blob = dataUrlToBlob(dataUrl);
+
+        // Create a file from the blob and set it as the value of the photo input
+        const file = new File([blob], "photo.jpg", { type: "image/jpeg" });
+        const photoInput = document.getElementById("photo");
+        photoInput.value = null;
+        photoInput.files = [file];
+    });
+});
+
+// Helper function to convert a data URL to a Blob object
+function dataUrlToBlob(dataUrl) {
+    const parts = dataUrl.split(",");
+    const mimeType = parts[0].split(":")[1];
+    const b64 = atob(parts[1]);
+    const bytes = new Uint8Array(b64.length);
+    for (let i = 0; i < b64.length; i++) {
+        bytes[i] = b64.charCodeAt(i);
+    }
+    return new Blob([bytes], { type: mimeType });
+}
+</script>

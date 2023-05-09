@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>CREATE CONTACT</title>
+    <style>
+        form {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    </style>
+</head>
+<body>
+ <form action="/crt" method="post">
+     <label for="name">Enter Contact Name:</label>
+   <input type="text" name="name"><br>
+     <label for="pn">Enter phone number:</label>
+   <input type="text" name="pn"><br>
+     <label for="mail">Enter Mail id:</label>
+   <input type="email" name="mail"><br>
+     <label for="name">Enter your relation:</label>
+   <input type="text" name="rltn"><br>
+     <input type="submit" value="create">
+ </form>
+</body>
+</html>
